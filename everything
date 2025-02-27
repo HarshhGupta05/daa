@@ -1,0 +1,174 @@
+bfs
+#include<stdio.h>
+#include<stdlib.h>
+struct queue
+{
+	int size;
+	int front;
+	int rear;
+	int *arr;
+};
+int isEmpty(struct queue *q)
+{
+	if(q->rear==q->front)
+	return 1;
+	else
+	return 0;
+}
+int isFull(struct queue *q)
+{
+	if(q->front==q->size-1)
+	return 1;
+	else
+	return 0;
+}
+void enqueue(struct queue *q,int val)
+{
+	if(isFull(q)==1)
+	printf("This queue is full.");
+	else
+	{
+//		q->rear++;
+		q->arr[++q->rear]=val;
+	}
+}
+int dequeue(struct queue *q)
+{
+	if(isEmpty(q)==1)
+	{
+		printf("This queue is empty.\n");
+		return -1;
+	}
+	else
+		return q->arr[++q->front];
+}
+int main()
+{
+	struct queue q;
+	q.size=400;
+	q.rear=q.front=0;
+	q.arr=(int*)malloc(q.size*sizeof(int));
+//	BFS traversal
+	int node;
+	int i=0,j;
+	int visited[7]={0,0,0,0,0,0,0};
+	int a[7][7]={
+	{0,1,1,1,0,0,0},
+	{1,0,1,0,0,0,0},
+	{1,1,0,1,1,0,0},
+	{1,0,1,0,1,0,0},
+	{0,0,1,1,0,1,1},
+	{0,0,0,0,1,0,0},
+	{0,0,0,0,1,0,0}
+	};
+	printf("%d",i);
+	visited[i]=1;
+	enqueue(&q,i); // enqueue i for exploration
+	while(isEmpty(&q)==0)
+	{
+		node=dequeue(&q);
+		for(j=0;j<7;j++)
+		{
+			if(a[node][j]==1&&visited[j]==0)
+			{
+				printf("%d",j);
+				visited[j]=1;
+				enqueue(&q,j);
+			}
+		}
+	}	
+}
+
+dfs
+
+#include<stdio.h>
+#include<stdlib.h>
+int visited[7]={0,0,0,0,0,0,0};
+int a[7][7]={
+	{0,1,1,1,0,0,0},
+	{1,0,1,0,0,0,0},
+	{1,1,0,1,1,0,0},
+	{1,0,1,0,1,0,0},
+	{0,0,1,1,0,1,1},
+	{0,0,0,0,1,0,0},
+	{0,0,0,0,1,0,0}
+	};
+void DFS(int i)
+{
+	int j;
+	printf("%d ",i);
+	visited[i]=1;
+	for(j=0;j<7;j++)
+	{ 
+		if(a[i][j]==1&&visited[j]==0)
+			DFS(j);
+	}
+}
+int main()
+{
+	DFS(0);
+}
+
+maxmin
+
+#include <stdio.h>
+struct pair {
+    int min;
+    int max;
+};
+
+struct pair getMinMax(int arr[], int low, int high)
+{
+    struct pair minmax, mml, mmr;
+    int mid;
+
+    // If there is only one element
+    if (low == high) {
+        minmax.max = arr[low];
+        minmax.min = arr[low];
+        return minmax;
+    }
+
+    /* If there are two elements */
+    if (high == low + 1) {
+        if (arr[low] > arr[high]) {
+            minmax.max = arr[low];
+            minmax.min = arr[high];
+        }
+        else {
+            minmax.max = arr[high];
+            minmax.min = arr[low];
+        }
+        return minmax;
+    }
+
+    /* If there are more than 2 elements */
+    mid = (low + high) / 2;
+    mml = getMinMax(arr, low, mid);
+    mmr = getMinMax(arr, mid + 1, high);
+
+    /* compare minimums of two parts*/
+    if (mml.min < mmr.min)
+        minmax.min = mml.min;
+    else
+        minmax.min = mmr.min;
+
+    /* compare maximums of two parts*/
+    if (mml.max > mmr.max)
+        minmax.max = mml.max;
+    else
+        minmax.max = mmr.max;
+
+    return minmax;
+}
+
+/* Driver program to test above function */
+int main()
+{
+    int arr[] = { 1000, 11, 445, 1, 330, 3000 };
+    int arr_size = 6;
+    struct pair minmax = getMinMax(arr, 0, arr_size - 1);
+    printf("nMinimum element is %d", minmax.min);
+    printf("nMaximum element is %d", minmax.max);
+    getchar();
+}
