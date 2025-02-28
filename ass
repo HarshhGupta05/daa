@@ -1,0 +1,63 @@
+OVERRIDDING 
+// Parent class
+class Animal {
+    void makeSound() {
+        System.out.println("Animal makes a sound");
+    }
+}
+
+// Child class overriding the method
+class Dog extends Animal {
+    @Override
+    void makeSound() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class MethodOverridingExample {
+    public static void main(String[] args) {
+        Animal myAnimal = new Animal();
+        myAnimal.makeSound(); // Calls parent class method
+
+        Dog myDog = new Dog();
+        myDog.makeSound(); // Calls overridden method in Dog class
+
+        Animal myPet = new Dog(); 
+        myPet.makeSound(); // Calls overridden method (runtime polymorphism)
+    }
+}
+
+
+
+
+
+
+
+OVERLOADING 
+
+class OverloadExample {
+    // Method with one parameter
+    void display(int num) {
+        System.out.println("Number: " + num);
+    }
+
+    // Method with two parameters
+    void display(int num, String text) {
+        System.out.println("Number: " + num + ", Text: " + text);
+    }
+
+    // Method with different parameter type
+    void display(double num) {
+        System.out.println("Decimal Number: " + num);
+    }
+}
+
+public class MethodOverloadingDemo {
+    public static void main(String[] args) {
+        OverloadExample obj = new OverloadExample();
+
+        obj.display(10);           // Calls first method
+        obj.display(20, "Hello");  // Calls second method
+        obj.display(15.5);         // Calls third method
+    }
+}
